@@ -1,0 +1,121 @@
+DICOM Tags Report
+Generated: 2025-09-15 10:17:21
+Original File: I0000009_70_64_91_90.dcm
+============================================================
+
+(0008,0008) | Image Type | ORIGINAL
+(0008,0016) | SOP Class UID | 1.2.840.10008.5.1.4.1.1.2
+(0008,0018) | SOP Instance UID | 1.2.392.200036.9116.2.6.1.48.1211393775.1214008220.912592
+(0008,0020) | Study Date | 20080621
+(0008,0021) | Series Date | 20080621
+(0008,0022) | Acquisition Date | 20080621
+(0008,0023) | Content Date | 20080621
+(0008,0030) | Study Time | 092139.000
+(0008,0031) | Series Time | 093011.437
+(0008,0032) | Acquisition Time | 092803.200
+(0008,0033) | Content Time | 092803.963
+(0008,0050) | Accession Number | 1127
+(0008,0060) | Modality | CT
+(0008,0070) | Manufacturer | TOSHIBA
+(0008,0080) | Institution Name | TRIPOLI MEDICAL CENTER
+(0008,0090) | Referring Physician's Name | 
+(0008,1010) | Station Name | ID_STATION
+(0008,103e) | Series Description |  CTA 1.0 ARTERIAL CE
+(0008,1040) | Institutional Department Name | ID_DEPARTMENT
+(0008,1090) | Manufacturer's Model Name | Aquilion
+(0008,2111) | Derivation Description | Lossless JPEG compression, selection value 1, point transform 0, compression ratio 2.9022
+(0008,9215) | Derivation Code Sequence | 
+(0010,0010) | Patient's Name | Car^Iman
+(0010,0020) | Patient ID | # Caroted
+(0010,0030) | Patient's Birth Date | 00010101
+(0010,0040) | Patient's Sex | M
+(0010,1020) | Patient's Size | 0.000000
+(0010,1030) | Patient's Weight | 0.000000
+(0018,0010) | Contrast/Bolus Agent | CE
+(0018,0015) | Body Part Examined | NECK
+(0018,0022) | Scan Options | HELICAL_CT
+(0018,0050) | Slice Thickness | 1.0
+(0018,0060) | KVP | 120
+(0018,0090) | Data Collection Diameter | 320.00
+(0018,1000) | Device Serial Number | SERIALNO
+(0018,1020) | Software Versions | V3.20ER003
+(0018,1030) | Protocol Name | CTA  CAROTID          250-3mm-9s
+(0018,1100) | Reconstruction Diameter | 240.00
+(0018,1120) | Gantry/Detector Tilt | +0.0
+(0018,1130) | Table Height | +78.00
+(0018,1140) | Rotation Direction | CW
+(0018,1150) | Exposure Time | 500
+(0018,1151) | X-Ray Tube Current | 280
+(0018,1152) | Exposure | 140
+(0018,1164) | Imager Pixel Spacing | 0.47037037037037
+(0018,1170) | Generator Power | 33
+(0018,1190) | Focal Spot(s) | 0.9
+(0018,1210) | Convolution Kernel | FC01
+(0018,2010) | Nominal Scanned Pixel Spacing | 0.47037037037037
+(0018,5100) | Patient Position | HFS
+(0018,9345) | CTDIvol | 35.2
+(0020,000d) | Study Instance UID | 1.2.392.200036.9116.2.6.1.48.1211393775.1214007022.404734
+(0020,000e) | Series Instance UID | 1.2.392.200036.9116.2.6.1.48.1211393775.1214008212.19024
+(0020,0010) | Study ID | Impo
+(0020,0011) | Series Number | 5
+(0020,0012) | Acquisition Number | 4
+(0020,0013) | Instance Number | 9
+(0020,0020) | Patient Orientation | L
+(0020,0032) | Image Position (Patient) | -120
+(0020,0037) | Image Orientation (Patient) | 1
+(0020,0052) | Frame of Reference UID | 1.2.392.200036.9116.2.6.1.48.1211393775.1214007701.23537
+(0020,1040) | Position Reference Indicator | 
+(0020,1041) | Slice Location | +6.40
+(0020,4000) | Image Comments | ARTERIAL
+(0028,0002) | Samples per Pixel | 1
+(0028,0004) | Photometric Interpretation | MONOCHROME2
+(0028,0010) | Rows | 512
+(0028,0011) | Columns | 512
+(0028,0030) | Pixel Spacing | 0.47037037037037
+(0028,0100) | Bits Allocated | 16
+(0028,0101) | Bits Stored | 16
+(0028,0102) | High Bit | 15
+(0028,0103) | Pixel Representation | 1
+(0028,1050) | Window Center | -834
+(0028,1051) | Window Width | 2467
+(0028,1052) | Rescale Intercept | 0
+(0028,1053) | Rescale Slope | 1
+(0028,1054) | Rescale Type | US
+(0040,0002) | Scheduled Procedure Step Start Date | 20080621
+(0040,0003) | Scheduled Procedure Step Start Time | 092139.000
+(0040,0004) | Scheduled Procedure Step End Date | 20080621
+(0040,0005) | Scheduled Procedure Step End Time | 095139.000
+(0040,0244) | Performed Procedure Step Start Date | 20080621
+(0040,0245) | Performed Procedure Step Start Time | 092139.000
+(0040,0253) | Performed Procedure Step ID | 1005
+(7005,0010) | Private Creator | TOSHIBA_MEC_CT3
+(7005,1007:TOSHIBA_MEC_CT3) | Reconstruction Center | 256
+(7005,1008:TOSHIBA_MEC_CT3) | Detector Slice Thickness in mm | 1.0
+(7005,1009:TOSHIBA_MEC_CT3) | Number of Detector rows to Reconstruct | 1111111111111111
+(7005,100a:TOSHIBA_MEC_CT3) | Table Speed in mm/rot | +15.00
+(7005,100b:TOSHIBA_MEC_CT3) | Filter | 3D-Q06
+(7005,100d:TOSHIBA_MEC_CT3) | Organ | NECK
+(7005,100e:TOSHIBA_MEC_CT3) | File Type Remarks | IMG
+(7005,100f:TOSHIBA_MEC_CT3) | Direction | HF
+(7005,1011:TOSHIBA_MEC_CT3) | Series Comment | Vol.
+(7005,1012:TOSHIBA_MEC_CT3) | Position | SU
+(7005,1013:TOSHIBA_MEC_CT3) | Expert Plan No. | 1
+(7005,1015:TOSHIBA_MEC_CT3) | Special Helical ACQ No. | 1
+(7005,1016:TOSHIBA_MEC_CT3) | Volume UID | 1.2.392.200036.9116.2.6.1.48.1211393775.1214008212.16730
+(7005,1017:TOSHIBA_MEC_CT3) | Total Frame Count in the Volume | 383
+(7005,1018:TOSHIBA_MEC_CT3) | Frame No. | 9
+(7005,1019:TOSHIBA_MEC_CT3) | Frame Sort Key | 1642763
+(7005,101a:TOSHIBA_MEC_CT3) | Frame Sort Order | 1
+(7005,101b:TOSHIBA_MEC_CT3) | Convolution Kernel for Series Record | FC01
+(7005,101c:TOSHIBA_MEC_CT3) | Contrast/Bolus Agent for Series Record | CE
+(7005,101d:TOSHIBA_MEC_CT3) | Reconstruction Number | 9
+(7005,101e:TOSHIBA_MEC_CT3) | Raw Data Number | 14
+(7005,101f:TOSHIBA_MEC_CT3) | Volume Number | 20080621093012019899
+(7005,1020:TOSHIBA_MEC_CT3) | Local Series Number | 5
+(7005,1021:TOSHIBA_MEC_CT3) | Decrease in Artifact Filter | BOOST
+(7005,1022:TOSHIBA_MEC_CT3) | Reconstruction Interval | 0.80
+(7005,1023:TOSHIBA_MEC_CT3) | Pitch Factor | 0.938
+(7005,1024:TOSHIBA_MEC_CT3) | The Acquisition Date of NRA | 20080612
+(7005,1030:TOSHIBA_MEC_CT3) | Main Modality in Study | CT
+(7005,1040:TOSHIBA_MEC_CT3) | DLP (Dose Length Product) | 1193.5
+(7fe0,0010) | Pixel Data | 

@@ -1,8 +1,14 @@
 ﻿using dicomAPIs.Data;
 using dicomAPIs.DTO;
 using FellowOakDicom;
+using FellowOakDicom.Imaging;
+using FellowOakDicom.Imaging.Render;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.Globalization;
+using System.IO;
 using System.Text;
 
 namespace dicomAPIs.Services
@@ -36,6 +42,8 @@ namespace dicomAPIs.Services
 
                 var dicomDto = ExtractDicomMetadata(dicomFile);
                 var allTags = ExtractAllDicomTags(dicomFile);
+                var fileFolder = CreateFileFolderStructure(formFile.FileName);
+                await SaveOriginalDicomFileAsync(formFile, fileFolder);
 
                 _logger.LogInformation("DICOM metadata extracted successfully from file: {FileName}", formFile.FileName);
 
@@ -43,7 +51,8 @@ namespace dicomAPIs.Services
                 {
                     DicomData = dicomDto,
                     OriginalFileName = formFile.FileName,
-                    AllTags = allTags
+                    AllTags = allTags,
+                    FileFolder = fileFolder
                 };
             }
             catch (Exception ex)
@@ -59,10 +68,9 @@ namespace dicomAPIs.Services
             {
                 _logger.LogInformation("Saving DICOM data for file: {FileName}", dicomData.OriginalFileName);
 
-
-                var filePath = await SaveDicomTagsToFileAsync(dicomData.AllTags, dicomData.OriginalFileName);
-
-                await SaveToDatabase(dicomData.DicomData, filePath);
+                var filePath = await SaveDicomTagsToFileAsync(dicomData.AllTags, dicomData.OriginalFileName, dicomData.FileFolder);
+                await SaveDicomImageAsync(dicomData.OriginalFileName,dicomData.FileFolder);
+                await SaveToDatabase(dicomData.DicomData, dicomData.FileFolder);
 
                 _logger.LogInformation("DICOM data saved successfully. Output saved to: {FilePath}", filePath);
 
@@ -79,36 +87,94 @@ namespace dicomAPIs.Services
             }
         }
 
+        private string CreateFileFolderStructure(string originalFileName)
+        {
+            var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(originalFileName);
+            var timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+            var folderName = $"{fileNameWithoutExtension}_{timestamp}";
+            
+            var fileFolder = Path.Combine(_outputDirectory, folderName);
+            
+            if (!Directory.Exists(fileFolder))
+            {
+                Directory.CreateDirectory(fileFolder);
+            }
+            
+            _logger.LogInformation("Created output folder: {FolderPath}", fileFolder);
+            return fileFolder;
+        }
 
-        public async Task<DicomResultDTO> ProcessDicomFileAsync(IFormFile formFile)
+        private async Task SaveOriginalDicomFileAsync(IFormFile formFile, string outputFolder)
         {
             try
             {
-                _logger.LogInformation("Processing DICOM file: {FileName}", formFile.FileName);
-
-                using var stream = formFile.OpenReadStream();
-                var dicomFile = DicomFile.Open(stream);
-
-                var dicomDto = ExtractDicomMetadata(dicomFile);
-                var allTags = ExtractAllDicomTags(dicomFile);
-                var filePath = await SaveDicomTagsToFileAsync(allTags, formFile.FileName);
-
-                await SaveToDatabase(dicomDto, filePath);
-
-                _logger.LogInformation("DICOM file processed successfully. Output saved to: {FilePath}", filePath);
-
-                return new DicomResultDTO
-                {
-                    Metadata = dicomDto,
-                    SavedPath = filePath
-                };
+                var originalFilePath = Path.Combine(outputFolder, formFile.FileName);
+                
+                using var fileStream = new FileStream(originalFilePath, FileMode.Create);
+                await formFile.CopyToAsync(fileStream);
+                
+                _logger.LogInformation("Original DICOM file saved to: {FilePath}", originalFilePath);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error processing DICOM file: {FileName}", formFile.FileName);
-                throw;
+                _logger.LogWarning(ex, "Failed to save original DICOM file");
             }
-        } // old method
+        }
+
+        private async Task SaveDicomImageAsync(string originalFileName, string outputFolder)
+        {
+            try
+            {
+                var filePath = Path.Combine(outputFolder, originalFileName);
+                var dicomFile = DicomFile.Open(filePath);
+                if (!dicomFile.Dataset.Contains(DicomTag.PixelData))
+                {
+                    _logger.LogInformation("No pixel data found in DICOM file: {FileName}", originalFileName);
+                    return;
+                }
+
+                var image = new DicomImage(dicomFile.Dataset);
+                
+                var renderedImage = image.RenderImage();
+                
+                var width = renderedImage.Width;
+                var height = renderedImage.Height;
+                var pixelData = renderedImage.Pixels;
+                
+                using var bitmap = new Bitmap(width, height, PixelFormat.Format32bppArgb);
+                
+                var bitmapData = bitmap.LockBits(
+                    new Rectangle(0, 0, width, height),
+                    ImageLockMode.WriteOnly,
+                    PixelFormat.Format32bppArgb);
+
+                try
+                {
+                    var stride = bitmapData.Stride;
+                    var totalBytes = Math.Abs(stride) * height;
+
+                    var sourceBytes = new byte[totalBytes];
+                    System.Runtime.InteropServices.Marshal.Copy(pixelData.Pointer, sourceBytes, 0, totalBytes);
+
+                    System.Runtime.InteropServices.Marshal.Copy(sourceBytes, 0, bitmapData.Scan0, totalBytes);
+                }
+                finally
+                {
+                    bitmap.UnlockBits(bitmapData);
+                }
+                
+                var imageFileName = $"{Path.GetFileNameWithoutExtension(originalFileName)}_image.png";
+                var imagePath = Path.Combine(outputFolder, imageFileName);
+                
+                bitmap.Save(imagePath, ImageFormat.Png);
+                
+                _logger.LogInformation("DICOM image extracted and saved to: {ImagePath}", imagePath);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex, "Failed to extract image from DICOM file: {FileName}", originalFileName);
+            }
+        }
 
         private DicomDTO ExtractDicomMetadata(DicomFile dicomFile)
         {
@@ -125,7 +191,6 @@ namespace dicomAPIs.Services
                 StudyDate = dataset.GetSingleValueOrDefault(DicomTag.StudyDate, string.Empty)
             };
         }
-
 
         private List<DicomTagDTO> ExtractAllDicomTags(DicomFile dicomFile)
         {
@@ -144,10 +209,11 @@ namespace dicomAPIs.Services
 
             return tags;
         }
-        private async Task<string> SaveDicomTagsToFileAsync(List<DicomTagDTO> allTags, string originalFileName)
+
+        private async Task<string> SaveDicomTagsToFileAsync(List<DicomTagDTO> allTags, string originalFileName, string outputFolder)
         {
             var fileName = $"DICOM_Tags_{Path.GetFileNameWithoutExtension(originalFileName)}.txt";
-            var filePath = Path.Combine(_outputDirectory, fileName);
+            var filePath = Path.Combine(outputFolder, fileName);
 
             var content = new StringBuilder();
             content.AppendLine($"DICOM Tags Report");

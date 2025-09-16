@@ -133,8 +133,8 @@ namespace APIs.Services
                 {
                     var person = new Person
                     {
-                        Name = response.Patient.PatientName,
-                        Email = $"patient_{response.Patient.PatientId}@example.com",
+                        Name = $"Test Person",
+                        Email = $"patient_{Guid.NewGuid()}@example.com",
                         DateOfBirth = response.Patient.PatientBirthDate,
                         MobileNumber = $"+201{Random.Shared.Next(100000000, 999999999)}",
                         Role = PersonRole.Patient

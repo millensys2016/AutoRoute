@@ -1,6 +1,8 @@
 using APIs.Services;
+using Core.Interfaces.Repositories;
 using Core.Interfaces.Services;
 using Data;
+using Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +17,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
               b => b.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName));
     
 });
+builder.Services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 builder.Services.AddScoped<IUploadService, UploadService>();
 
 var app = builder.Build();

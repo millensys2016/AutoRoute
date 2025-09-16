@@ -1,11 +1,23 @@
 ﻿using Core.DTOs.Upload;
+using Core.Interfaces.Repositories;
 using Core.Interfaces.Services;
+using Core.Models;
 using Dicom;
 
 namespace APIs.Services
 {
-    public class UploadService : IUploadService
+    public class UploadService(IBaseRepository<Person> personRepository, 
+        IBaseRepository<Patient> patientRepository, 
+        IBaseRepository<Study> studyRepository, 
+        IBaseRepository<Series> seriesRepository, 
+        IBaseRepository<Image> imageRepository) : IUploadService
     {
+        private readonly IBaseRepository<Person> _personRepository = personRepository;
+        private readonly IBaseRepository<Patient> _patientRepository = patientRepository;
+        private readonly IBaseRepository<Study> _studyRepository = studyRepository;
+        private readonly IBaseRepository<Series> _seriesRepository = seriesRepository;
+        private readonly IBaseRepository<Image> _imageRepository = imageRepository;
+
         public async Task<UploadDicomFileResponse> ExtractDicomFileInfo(UploadDicomFileRequest request)
         {
             var stream = request.DicomFile.OpenReadStream();

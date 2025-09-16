@@ -5,5 +5,7 @@
         public DicomDTO DicomData { get; init; } = new();
         public string OriginalFileName { get; init; } = string.Empty;
         public List<DicomTagDTO> AllTags { get; init; } = new();
+        public string FileFolder { get; init; } = string.Empty;
+
     }
 }

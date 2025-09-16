@@ -19,23 +19,32 @@ namespace APIs.Services
                     PatientId = dataset.GetSingleValueOrDefault(DicomTag.PatientID, "Unknown"),
                     PatientName = dataset.GetSingleValueOrDefault(DicomTag.PatientName, "Unknown"),
                     PatientSex = dataset.GetSingleValueOrDefault(DicomTag.PatientSex, "Unknown"),
-                    PatientBirthDate = dataset.GetSingleValueOrDefault(DicomTag.PatientBirthDate, "Unknown")
+                    PatientBirthDate = dataset.GetSingleValueOrDefault(DicomTag.PatientBirthDate, DateOnly.MinValue),
+                    PatientSize = (uint)dataset.GetSingleValueOrDefault(DicomTag.PatientSize, 0),
+                    PatientWeight = (uint)dataset.GetSingleValueOrDefault(DicomTag.PatientWeight, 0),
                 },
                 Study = new StudyDto
                 {
                     StudyInstanceUID = dataset.GetSingleValueOrDefault(DicomTag.StudyInstanceUID, "Unknown"),
-                    StudyDate = dataset.GetSingleValueOrDefault(DicomTag.StudyDate, "Unknown"),
-                    StudyDescription = dataset.GetSingleValueOrDefault(DicomTag.StudyDescription, "Unknown")
+                    StudyDate = dataset.GetSingleValueOrDefault(DicomTag.StudyDate, DateOnly.MinValue),
+                    StudyDescription = dataset.GetSingleValueOrDefault(DicomTag.StudyDescription, "Unknown"),
+                    StudyTime = dataset.GetSingleValueOrDefault(DicomTag.StudyTime, TimeOnly.MinValue),
+                    StudyId = (uint)dataset.GetSingleValueOrDefault(DicomTag.StudyID, 0),
                 },
                 Series = new SeriesDto
                 {
                     SeriesInstanceUID = dataset.GetSingleValueOrDefault(DicomTag.SeriesInstanceUID, "Unknown"),
                     SeriesNumber = (uint)dataset.GetSingleValueOrDefault(DicomTag.SeriesNumber, 0),
-                    Modality = dataset.GetSingleValueOrDefault(DicomTag.Modality, "Unknown")
+                    Modality = dataset.GetSingleValueOrDefault(DicomTag.Modality, "Unknown"),
+                    SeriesTime = dataset.GetSingleValueOrDefault(DicomTag.SeriesTime, TimeOnly.MinValue),
+                    SeriesDescription = dataset.GetSingleValueOrDefault(DicomTag.SeriesDescription, "Unkown"),
                 },
                 Image = new ImageDto
                 {
                     SOPInstanceUID = dataset.GetSingleValueOrDefault(DicomTag.SOPInstanceUID, "Unknown"),
+                    SOPClassUID = dataset.GetSingleValueOrDefault(DicomTag.SOPClassUID, "Unknown"),
+                    AcquisitionDate = dataset.GetSingleValueOrDefault(DicomTag.AcquisitionDate, DateOnly.MinValue),
+                    AcquisitionTime = dataset.GetSingleValueOrDefault(DicomTag.AcquisitionTime, TimeOnly.MinValue),
                     InstanceNumber = (uint)dataset.GetSingleValueOrDefault(DicomTag.InstanceNumber, 0),
                     Rows = (uint)dataset.GetSingleValueOrDefault(DicomTag.Rows, 0),
                     Columns = (uint)dataset.GetSingleValueOrDefault(DicomTag.Columns, 0),

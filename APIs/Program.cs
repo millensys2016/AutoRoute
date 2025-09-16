@@ -1,5 +1,7 @@
 using APIs.Services;
 using Core.Interfaces.Services;
+using Data;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +9,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
+builder.Services.AddDbContext<AppDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration["Database:ConnectionString"],
+              b => b.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName));
+    
+});
 builder.Services.AddScoped<IUploadService, UploadService>();
 
 var app = builder.Build();

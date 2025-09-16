@@ -255,6 +255,11 @@ namespace Data
                 entity.Property(i => i.AcquisitionTime)
                     .HasColumnType("time");
 
+                entity.Property(i => i.Path)
+                .IsRequired()
+                .HasMaxLength(512)
+                .HasColumnType("varchar(512)");
+
                 // Add positive value constraints
                 entity.ToTable(t => t.HasCheckConstraint(
                     "CK_Image_InstanceNumber",

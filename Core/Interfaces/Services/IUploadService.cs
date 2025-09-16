@@ -7,5 +7,6 @@ namespace Core.Interfaces.Services
     {
         Task<UploadDicomFileResponse> ExtractDicomFileInfo(UploadDicomFileRequest request);
         Task<string> SaveDicomFileToDisk(IFormFile dicomFile, string patientId);
+        //Task<bool> SaveDicomFileToDatabase(UploadDicomFileResponse response);
     }
 }

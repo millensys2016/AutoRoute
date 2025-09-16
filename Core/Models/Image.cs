@@ -59,6 +59,11 @@ namespace Core.Models
         [Column(TypeName = "time")]
         public TimeOnly? AcquisitionTime { get; set; }
 
+        // File path on the local server
+        [Required, MaxLength(512)]
+        [Column(TypeName = "varchar(512)")]
+        public required string Path { get; set; }
+
         // CreatedAt: datetime with default value now
         [Required]
         [Column(TypeName = "datetime")]

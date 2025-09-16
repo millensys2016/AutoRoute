@@ -36,12 +36,12 @@ namespace Core.Models
 
         // Role: enum [patient, doctor, admin], not null
         [Required]
-        public PersonRole Role { get; set; }
+        public required PersonRole Role { get; set; }
 
         // CreatedAt: datetime with default value now (CLR default set here; DB default should be set in migration/EF config)
         [Required]
         [Column(TypeName = "datetime")]
-        public required DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         // UpdatedAt: datetime, nullable
         [Column(TypeName = "datetime")]

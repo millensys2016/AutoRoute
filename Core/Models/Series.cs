@@ -39,7 +39,7 @@ namespace Core.Models
         // Series Description from DICOM
         [MaxLength(64)]
         [Column(TypeName = "varchar(256)")]
-        public string? SeriesDescription { get; set; }
+        public required string? SeriesDescription { get; set; }
 
         // Series Time from DICOM
         [Required]
@@ -49,7 +49,7 @@ namespace Core.Models
         // CreatedAt: datetime with default value now
         [Required]
         [Column(TypeName = "datetime")]
-        public required DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         // UpdatedAt: datetime, nullable
         [Column(TypeName = "datetime")]

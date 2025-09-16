@@ -13,7 +13,7 @@ namespace Core.Models
 
         // Foreign key to Series (many-to-one relationship)
         [Required]
-        public int SeriesId { get; set; }
+        public required int SeriesId { get; set; }
 
         // Navigation property to Series
         [ForeignKey("SeriesId")]
@@ -23,7 +23,7 @@ namespace Core.Models
         [Required]
         [MaxLength(64)]
         [Column(TypeName = "varchar(64)")]
-        public string SOPInstanceUID { get; set; } = string.Empty;
+        public required string SOPInstanceUID { get; set; } = string.Empty;
 
         // Instance Number from DICOM (image number within the series)
         [Required]
@@ -43,7 +43,7 @@ namespace Core.Models
         // Bits Allocated per pixel from DICOM
         [Required]
         [Range(1, uint.MaxValue, ErrorMessage = "Bits allocated must be a positive integer.")]
-        public uint BitsAllocated { get; set; }
+        public required uint BitsAllocated { get; set; }
 
         // SOP Class UID from DICOM (defines the type of DICOM object)
         [Required]
@@ -53,11 +53,11 @@ namespace Core.Models
 
         // Acquisition Date from DICOM
         [Column(TypeName = "date")]
-        public DateOnly? AcquisitionDate { get; set; }
+        public required DateOnly? AcquisitionDate { get; set; }
 
         // Acquisition Time from DICOM
         [Column(TypeName = "time")]
-        public TimeOnly? AcquisitionTime { get; set; }
+        public required TimeOnly? AcquisitionTime { get; set; }
 
         // File path on the local server
         [Required, MaxLength(512)]
@@ -67,7 +67,7 @@ namespace Core.Models
         // CreatedAt: datetime with default value now
         [Required]
         [Column(TypeName = "datetime")]
-        public required DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         // UpdatedAt: datetime, nullable
         [Column(TypeName = "datetime")]

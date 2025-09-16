@@ -33,7 +33,7 @@ namespace Core.Models
         // Study Description from DICOM
         [MaxLength(64)]
         [Column(TypeName = "varchar(256)")]
-        public string? StudyDescription { get; set; }
+        public required string? StudyDescription { get; set; }
 
         // Study Time from DICOM
         [Required]
@@ -41,12 +41,12 @@ namespace Core.Models
         public required TimeOnly StudyTime { get; set; }
 
         // Study ID from DICOM
-        public uint? StudyId { get; set; }
+        public required uint? StudyId { get; set; }
 
         // CreatedAt: datetime with default value now
         [Required]
         [Column(TypeName = "datetime")]
-        public required DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         // UpdatedAt: datetime, nullable
         [Column(TypeName = "datetime")]

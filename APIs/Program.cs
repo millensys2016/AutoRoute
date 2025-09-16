@@ -18,6 +18,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     
 });
 builder.Services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+builder.Services.AddScoped<IPatientRepository, PatientRepository>();
 builder.Services.AddScoped<IUploadService, UploadService>();
 
 var app = builder.Build();

@@ -44,15 +44,15 @@ namespace Core.Models
         public required DateOnly PatientBirthDate { get; set; }
 
         // Patient Size from DICOM (in cm)
-        public uint? PatientSize { get; set; }
+        public required uint? PatientSize { get; set; }
 
         // Patient Weight from DICOM (in kg)
-        public uint? PatientWeight { get; set; }
+        public required uint? PatientWeight { get; set; }
 
         // CreatedAt: datetime with default value now
         [Required]
         [Column(TypeName = "datetime")]
-        public required DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         // UpdatedAt: datetime, nullable
         [Column(TypeName = "datetime")]
